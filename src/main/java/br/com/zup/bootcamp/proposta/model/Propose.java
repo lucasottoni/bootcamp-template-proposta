@@ -38,6 +38,8 @@ public class Propose {
     @NotNull
     @Enumerated(EnumType.STRING)
     private AnalysisStatus financialAnalysisStatus;
+    @Column
+    private String cardId;
 
     protected Propose() {
 
@@ -90,5 +92,11 @@ public class Propose {
     public void changeFinancialAnalysis(AnalysisStatus newAnalysis) {
         Assert.isTrue(this.financialAnalysisStatus == AnalysisStatus.NOT_ELIGIBLE, "cannot change already eligible");
         this.financialAnalysisStatus = newAnalysis;
+    }
+
+    public void setCardId(String cardId) {
+        Assert.isTrue(this.financialAnalysisStatus == AnalysisStatus.ELIGIBLE, "cannot get card for non eligible");
+        Assert.isNull(this.cardId, "card has already been generated");
+        this.cardId = cardId;
     }
 }
