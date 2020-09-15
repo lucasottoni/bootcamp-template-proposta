@@ -3,7 +3,6 @@ package br.com.zup.bootcamp.proposta.resources;
 
 import java.math.BigDecimal;
 import java.util.Objects;
-import java.util.UUID;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -64,14 +63,13 @@ public class NewProposeRequest {
     }
 
     public Propose toModel() {
-        Propose propose = new Propose();
-        propose.setId(UUID.randomUUID().toString());
-        propose.setAddress(this.address);
-        propose.setDocument(this.document);
-        propose.setEmail(this.email);
-        propose.setName(this.name);
-        propose.setSalary(this.salary);
-        return propose;
+        return new Propose(
+                this.document,
+                this.email,
+                this.name,
+                this.address,
+                this.salary
+        );
     }
 
     @Override

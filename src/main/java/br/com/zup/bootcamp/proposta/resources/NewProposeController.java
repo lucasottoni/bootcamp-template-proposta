@@ -6,7 +6,6 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import br.com.zup.bootcamp.proposta.analisys.FinancialProposeAnalysis;
+import br.com.zup.bootcamp.proposta.model.AnalysisStatus;
 import br.com.zup.bootcamp.proposta.model.Propose;
-import br.com.zup.bootcamp.proposta.repository.ProposeRepository;
+import br.com.zup.bootcamp.proposta.repository.TransactionWrapper;
 import br.com.zup.bootcamp.proposta.validator.DuplicateProposalValidator;
 import br.com.zup.bootcamp.proposta.validator.NewProposeRequestValidator;
 
@@ -24,14 +25,17 @@ public class NewProposeController {
 
     private final NewProposeRequestValidator validator;
     private final DuplicateProposalValidator duplicateProposalValidator;
-    private final ProposeRepository proposeRepository;
+    private final TransactionWrapper transactionWrapper;
+    private final FinancialProposeAnalysis financialProposeAnalysis;
 
     public NewProposeController(NewProposeRequestValidator validator,
             DuplicateProposalValidator duplicateProposalValidator,
-            ProposeRepository proposeRepository) {
+            TransactionWrapper transactionWrapper,
+            FinancialProposeAnalysis financialProposeAnalysis) {
         this.validator = validator;
         this.duplicateProposalValidator = duplicateProposalValidator;
-        this.proposeRepository = proposeRepository;
+        this.transactionWrapper = transactionWrapper;
+        this.financialProposeAnalysis = financialProposeAnalysis;
     }
 
     @InitBinder
@@ -40,7 +44,6 @@ public class NewProposeController {
     }
 
     @PostMapping("/propose")
-    @Transactional
     public ResponseEntity<Void> createNewPropose(
             @Valid @RequestBody NewProposeRequest request) {
 
@@ -49,7 +52,11 @@ public class NewProposeController {
         }
 
         Propose propose = request.toModel();
-        proposeRepository.save(propose);
+        transactionWrapper.create(propose);
+
+        final AnalysisStatus analysisStatus = financialProposeAnalysis.execute(propose);
+        propose.changeFinancialAnalysis(analysisStatus);
+        transactionWrapper.update(propose);
 
         return ResponseEntity.created(URI.create("/propose/" + propose.getId())).build();
     }

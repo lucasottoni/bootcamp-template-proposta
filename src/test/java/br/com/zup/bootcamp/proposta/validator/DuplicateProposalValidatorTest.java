@@ -20,7 +20,7 @@ class DuplicateProposalValidatorTest {
         ProposeRepository repository = Mockito.mock(ProposeRepository.class);
         DuplicateProposalValidator validator = new DuplicateProposalValidator(repository);
 
-        Propose row = new Propose();
+        Propose row = new Propose("123", "", "", "", BigDecimal.ONE);
 
         Mockito.when(repository.findByDocument("123")).thenReturn(Optional.of(row));
 
