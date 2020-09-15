@@ -48,7 +48,7 @@ public class NewProposeController {
             @Valid @RequestBody NewProposeRequest request) {
 
         if (duplicateProposalValidator.hasDuplicateDocument(request)) {
-            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY);
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "duplicated document");
         }
 
         Propose propose = request.toModel();
