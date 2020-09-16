@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.validation.Errors;
 
-import br.com.zup.bootcamp.proposta.resources.NewProposeRequest;
+import br.com.zup.bootcamp.proposta.resources.in.NewProposeRequest;
 
 class NewProposeRequestValidatorTest {
 

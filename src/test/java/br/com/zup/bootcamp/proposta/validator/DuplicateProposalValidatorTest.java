@@ -10,7 +10,7 @@ import org.mockito.Mockito;
 
 import br.com.zup.bootcamp.proposta.model.Propose;
 import br.com.zup.bootcamp.proposta.repository.ProposeRepository;
-import br.com.zup.bootcamp.proposta.resources.NewProposeRequest;
+import br.com.zup.bootcamp.proposta.resources.in.NewProposeRequest;
 
 class DuplicateProposalValidatorTest {
 

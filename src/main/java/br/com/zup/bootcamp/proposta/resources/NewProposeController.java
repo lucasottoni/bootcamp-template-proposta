@@ -17,6 +17,7 @@ import br.com.zup.bootcamp.proposta.analisys.FinancialProposeAnalysis;
 import br.com.zup.bootcamp.proposta.model.AnalysisStatus;
 import br.com.zup.bootcamp.proposta.model.Propose;
 import br.com.zup.bootcamp.proposta.repository.TransactionWrapper;
+import br.com.zup.bootcamp.proposta.resources.in.NewProposeRequest;
 import br.com.zup.bootcamp.proposta.validator.DuplicateProposalValidator;
 import br.com.zup.bootcamp.proposta.validator.NewProposeRequestValidator;
 

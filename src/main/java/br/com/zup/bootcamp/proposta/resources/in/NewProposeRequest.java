@@ -1,4 +1,4 @@
-package br.com.zup.bootcamp.proposta.resources;
+package br.com.zup.bootcamp.proposta.resources.in;
 
 
 import java.math.BigDecimal;

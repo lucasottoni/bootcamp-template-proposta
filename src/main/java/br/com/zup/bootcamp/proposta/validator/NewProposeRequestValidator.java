@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import br.com.zup.bootcamp.proposta.resources.NewProposeRequest;
+import br.com.zup.bootcamp.proposta.resources.in.NewProposeRequest;
 
 @Component
 public class NewProposeRequestValidator implements Validator {

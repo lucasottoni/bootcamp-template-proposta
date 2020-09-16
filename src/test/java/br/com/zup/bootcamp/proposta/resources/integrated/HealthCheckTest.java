@@ -1,7 +1,5 @@
 package br.com.zup.bootcamp.proposta.resources.integrated;
 
-import java.math.BigDecimal;
-
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,8 +16,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
-import br.com.zup.bootcamp.proposta.resources.NewProposeRequest;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest

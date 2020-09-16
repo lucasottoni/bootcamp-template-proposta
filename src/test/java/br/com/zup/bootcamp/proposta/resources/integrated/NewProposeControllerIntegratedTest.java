@@ -22,7 +22,7 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.zup.bootcamp.proposta.resources.NewProposeRequest;
+import br.com.zup.bootcamp.proposta.resources.in.NewProposeRequest;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
