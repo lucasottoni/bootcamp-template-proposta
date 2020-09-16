@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -27,7 +26,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.zup.bootcamp.proposta.analisys.FinancialProposeAnalysis;
 import br.com.zup.bootcamp.proposta.model.Propose;
-import br.com.zup.bootcamp.proposta.repository.ProposeRepository;
 import br.com.zup.bootcamp.proposta.repository.TransactionWrapper;
 import br.com.zup.bootcamp.proposta.validator.DocumentValidator;
 import br.com.zup.bootcamp.proposta.validator.DuplicateProposalValidator;

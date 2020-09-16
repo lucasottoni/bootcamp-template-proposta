@@ -89,6 +89,10 @@ public class Propose {
         return this.financialAnalysisStatus;
     }
 
+    public String getCardId() {
+        return cardId;
+    }
+
     public void changeFinancialAnalysis(AnalysisStatus newAnalysis) {
         Assert.isTrue(this.financialAnalysisStatus == AnalysisStatus.NOT_ELIGIBLE, "cannot change already eligible");
         this.financialAnalysisStatus = newAnalysis;
