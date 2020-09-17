@@ -19,7 +19,7 @@ public class ProposeFollowUpController {
         this.proposeRepository = proposeRepository;
     }
 
-    @GetMapping("/propose/{proposeId}")
+    @GetMapping("/api/propose/{proposeId}")
     public ProposeResponse findById(@PathVariable("proposeId") String proposeId) {
         final Propose propose = proposeRepository.findById(proposeId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "PROPOSE NOT FOUND"));
 

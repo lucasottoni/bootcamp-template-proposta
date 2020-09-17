@@ -42,7 +42,7 @@ class ProposeFollowUpControllerTest {
 
         mvc.perform(
                 MockMvcRequestBuilders
-                        .get("/propose/" + proposeId)
+                        .get(getUrl(proposeId))
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON)
         ).andDo(MockMvcResultHandlers.print())
@@ -64,7 +64,7 @@ class ProposeFollowUpControllerTest {
 
         mvc.perform(
                 MockMvcRequestBuilders
-                        .get("/propose/" + proposeId)
+                        .get(getUrl(proposeId))
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON)
         ).andDo(MockMvcResultHandlers.print())
@@ -87,7 +87,7 @@ class ProposeFollowUpControllerTest {
 
         mvc.perform(
                 MockMvcRequestBuilders
-                        .get("/propose/" + proposeId)
+                        .get(getUrl(proposeId))
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON)
         ).andDo(MockMvcResultHandlers.print())
@@ -98,7 +98,6 @@ class ProposeFollowUpControllerTest {
 
     }
 
-
     @Test
     @DisplayName("Proposal not found")
     void proposalNotFound() throws Exception {
@@ -108,11 +107,15 @@ class ProposeFollowUpControllerTest {
 
         mvc.perform(
                 MockMvcRequestBuilders
-                        .get("/propose/" + proposeId)
+                        .get(getUrl(proposeId))
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON)
         ).andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
 
+    }
+
+    private String getUrl(String proposeId) {
+        return "/api/propose/" + proposeId;
     }
 }

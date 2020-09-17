@@ -44,7 +44,7 @@ public class NewProposeController {
         binder.addValidators(validator);
     }
 
-    @PostMapping("/propose")
+    @PostMapping("/api/propose")
     public ResponseEntity<Void> createNewPropose(
             @Valid @RequestBody NewProposeRequest request) {
 

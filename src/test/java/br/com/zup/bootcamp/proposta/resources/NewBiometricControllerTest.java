@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.Base64;
 import java.util.Optional;
 
-import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +27,6 @@ import br.com.zup.bootcamp.proposta.model.Propose;
 import br.com.zup.bootcamp.proposta.repository.BiometricRepository;
 import br.com.zup.bootcamp.proposta.repository.ProposeRepository;
 import br.com.zup.bootcamp.proposta.resources.in.NewBiometricRequest;
-import br.com.zup.bootcamp.proposta.resources.in.NewProposeRequest;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(NewBiometricController.class)
@@ -56,7 +54,7 @@ class NewBiometricControllerTest {
 
         mvc.perform(
                 MockMvcRequestBuilders
-                        .post("/card/" + cardId + "/biometric")
+                        .post(getUrl(cardId))
                         .content(asJsonString(request))
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON)
@@ -73,7 +71,7 @@ class NewBiometricControllerTest {
 
         mvc.perform(
                 MockMvcRequestBuilders
-                        .post("/card/" + cardId + "/biometric")
+                        .post(getUrl(cardId))
                         .content(asJsonString(request))
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON)
@@ -90,12 +88,16 @@ class NewBiometricControllerTest {
 
         mvc.perform(
                 MockMvcRequestBuilders
-                        .post("/card/" + cardId + "/biometric")
+                        .post(getUrl(cardId))
                         .content(asJsonString(request))
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON)
         ).andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    private String getUrl(String cardId) {
+        return "/api/card/" + cardId + "/biometric";
     }
 
     private String asJsonString(NewBiometricRequest request) throws JsonProcessingException {

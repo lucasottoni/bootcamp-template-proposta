@@ -30,7 +30,7 @@ public class NewBiometricController {
         this.proposeRepository = proposeRepository;
     }
 
-    @PostMapping("/card/{cardId}/biometric")
+    @PostMapping("/api/card/{cardId}/biometric")
     @ResponseStatus(HttpStatus.CREATED)
     public void addBiometric(@PathVariable("cardId") String cardId,
             @Valid @RequestBody NewBiometricRequest biometricRequest) {

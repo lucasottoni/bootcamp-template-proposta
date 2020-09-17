@@ -52,7 +52,7 @@ class NewProposeControllerIntegratedTest {
 
         mvc.perform(
                 MockMvcRequestBuilders
-                        .post("/propose")
+                        .post(getUrl())
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .content(asJsonString(request))
                         .accept(MediaType.APPLICATION_JSON)
@@ -77,7 +77,7 @@ class NewProposeControllerIntegratedTest {
 
         mvc.perform(
                 MockMvcRequestBuilders
-                        .post("/propose")
+                        .post(getUrl())
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .content(asJsonString(request))
                         .accept(MediaType.APPLICATION_JSON)
@@ -101,7 +101,7 @@ class NewProposeControllerIntegratedTest {
 
         mvc.perform(
                 MockMvcRequestBuilders
-                        .post("/propose")
+                        .post(getUrl())
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .content(asJsonString(request))
                         .accept(MediaType.APPLICATION_JSON)
@@ -124,7 +124,7 @@ class NewProposeControllerIntegratedTest {
 
         mvc.perform(
                 MockMvcRequestBuilders
-                        .post("/propose")
+                        .post(getUrl())
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .content(asJsonString(request))
                         .accept(MediaType.APPLICATION_JSON)
@@ -147,7 +147,7 @@ class NewProposeControllerIntegratedTest {
 
         mvc.perform(
                 MockMvcRequestBuilders
-                        .post("/propose")
+                        .post(getUrl())
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .content(asJsonString(request))
                         .accept(MediaType.APPLICATION_JSON)
@@ -156,13 +156,17 @@ class NewProposeControllerIntegratedTest {
 
         mvc.perform(
                 MockMvcRequestBuilders
-                        .post("/propose")
+                        .post(getUrl())
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .content(asJsonString(request))
                         .accept(MediaType.APPLICATION_JSON)
         ).andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isUnprocessableEntity());
 
+    }
+
+    private String getUrl() {
+        return "/api/propose";
     }
 
     private String asJsonString(NewProposeRequest request) throws JsonProcessingException {

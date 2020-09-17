@@ -72,7 +72,7 @@ class NewProposeControllerTest {
 
         mvc.perform(
                 MockMvcRequestBuilders
-                        .post("/propose")
+                        .post(getUrl())
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .content(asJsonString(request))
                         .accept(MediaType.APPLICATION_JSON)
@@ -98,7 +98,7 @@ class NewProposeControllerTest {
 
         mvc.perform(
                 MockMvcRequestBuilders
-                        .post("/propose")
+                        .post(getUrl())
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .content(asJsonString(request))
                         .accept(MediaType.APPLICATION_JSON)
@@ -126,7 +126,7 @@ class NewProposeControllerTest {
 
         mvc.perform(
                 MockMvcRequestBuilders
-                        .post("/propose")
+                        .post(getUrl())
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .content(asJsonString(request))
                         .accept(MediaType.APPLICATION_JSON)
@@ -152,7 +152,7 @@ class NewProposeControllerTest {
 
         mvc.perform(
                 MockMvcRequestBuilders
-                        .post("/propose")
+                        .post(getUrl())
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .content(asJsonString(request))
                         .accept(MediaType.APPLICATION_JSON)
@@ -160,6 +160,10 @@ class NewProposeControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isUnprocessableEntity());
 
         Mockito.verify(transactionWrapper, Mockito.never()).create(Mockito.any(Propose.class));
+    }
+
+    private String getUrl() {
+        return "/api/propose";
     }
 
     private String asJsonString(NewProposeRequest request) throws JsonProcessingException {
