@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -30,6 +31,7 @@ public class NewBiometricController {
     }
 
     @PostMapping("/card/{cardId}/biometric")
+    @ResponseStatus(HttpStatus.CREATED)
     public void addBiometric(@PathVariable("cardId") String cardId,
             @Valid @RequestBody NewBiometricRequest biometricRequest) {
         logger.info("Creating new biometric for card {}", cardId);
