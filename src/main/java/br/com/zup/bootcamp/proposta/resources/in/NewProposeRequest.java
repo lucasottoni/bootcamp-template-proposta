@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 import br.com.zup.bootcamp.proposta.model.Propose;
-import br.com.zup.bootcamp.proposta.validator.DocumentValidator;
+import br.com.zup.bootcamp.proposta.resources.validator.DocumentValidator;
 
 public class NewProposeRequest {
 

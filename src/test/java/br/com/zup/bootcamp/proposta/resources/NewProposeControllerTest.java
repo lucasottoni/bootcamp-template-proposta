@@ -24,13 +24,13 @@ import org.springframework.validation.Errors;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.zup.bootcamp.proposta.analisys.FinancialProposeAnalysis;
+import br.com.zup.bootcamp.proposta.service.analysis.FinancialProposeAnalysis;
 import br.com.zup.bootcamp.proposta.model.Propose;
 import br.com.zup.bootcamp.proposta.repository.TransactionWrapper;
 import br.com.zup.bootcamp.proposta.resources.in.NewProposeRequest;
-import br.com.zup.bootcamp.proposta.validator.DocumentValidator;
-import br.com.zup.bootcamp.proposta.validator.DuplicateProposalValidator;
-import br.com.zup.bootcamp.proposta.validator.NewProposeRequestValidator;
+import br.com.zup.bootcamp.proposta.resources.validator.DocumentValidator;
+import br.com.zup.bootcamp.proposta.resources.validator.DuplicateProposalValidator;
+import br.com.zup.bootcamp.proposta.resources.validator.NewProposeRequestValidator;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(NewProposeController.class)

@@ -1,4 +1,4 @@
-package br.com.zup.bootcamp.proposta.validator;
+package br.com.zup.bootcamp.proposta.resources.validator;
 
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;

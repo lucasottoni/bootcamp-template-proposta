@@ -1,8 +1,11 @@
-package br.com.zup.bootcamp.proposta.validator;
+package br.com.zup.bootcamp.proposta.resources.validator;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import br.com.zup.bootcamp.proposta.resources.validator.CPFErrors;
+import br.com.zup.bootcamp.proposta.resources.validator.CPFValidator;
 
 class CPFValidatorTest {
 

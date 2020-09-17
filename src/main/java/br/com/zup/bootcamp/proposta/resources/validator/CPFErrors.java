@@ -1,4 +1,4 @@
-package br.com.zup.bootcamp.proposta.validator;
+package br.com.zup.bootcamp.proposta.resources.validator;
 
 public enum CPFErrors {
     INVALID_DIGITS,

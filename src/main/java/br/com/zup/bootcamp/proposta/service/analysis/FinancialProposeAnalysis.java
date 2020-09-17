@@ -1,4 +1,4 @@
-package br.com.zup.bootcamp.proposta.analisys;
+package br.com.zup.bootcamp.proposta.service.analysis;
 
 import java.text.MessageFormat;
 import java.util.Optional;

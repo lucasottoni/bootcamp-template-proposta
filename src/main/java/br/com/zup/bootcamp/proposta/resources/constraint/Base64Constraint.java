@@ -1,4 +1,4 @@
-package br.com.zup.bootcamp.proposta.constraint;
+package br.com.zup.bootcamp.proposta.resources.constraint;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

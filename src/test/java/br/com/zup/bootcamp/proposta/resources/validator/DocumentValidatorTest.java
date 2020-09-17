@@ -1,9 +1,15 @@
-package br.com.zup.bootcamp.proposta.validator;
+package br.com.zup.bootcamp.proposta.resources.validator;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+
+import br.com.zup.bootcamp.proposta.resources.validator.CNPJErrors;
+import br.com.zup.bootcamp.proposta.resources.validator.CNPJValidator;
+import br.com.zup.bootcamp.proposta.resources.validator.CPFErrors;
+import br.com.zup.bootcamp.proposta.resources.validator.CPFValidator;
+import br.com.zup.bootcamp.proposta.resources.validator.DocumentValidator;
 
 class DocumentValidatorTest {
     @Test

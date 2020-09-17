@@ -1,4 +1,4 @@
-package br.com.zup.bootcamp.proposta.validator;
+package br.com.zup.bootcamp.proposta.resources.validator;
 
 import java.math.BigDecimal;
 
@@ -8,6 +8,8 @@ import org.mockito.Mockito;
 import org.springframework.validation.Errors;
 
 import br.com.zup.bootcamp.proposta.resources.in.NewProposeRequest;
+import br.com.zup.bootcamp.proposta.resources.validator.DocumentValidator;
+import br.com.zup.bootcamp.proposta.resources.validator.NewProposeRequestValidator;
 
 class NewProposeRequestValidatorTest {
 

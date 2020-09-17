@@ -1,4 +1,4 @@
-package br.com.zup.bootcamp.proposta.advice;
+package br.com.zup.bootcamp.proposta.resources.advice;
 
 import java.util.List;
 

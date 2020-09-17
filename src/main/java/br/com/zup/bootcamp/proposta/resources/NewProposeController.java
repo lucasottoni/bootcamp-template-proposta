@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import br.com.zup.bootcamp.proposta.analisys.FinancialProposeAnalysis;
+import br.com.zup.bootcamp.proposta.service.analysis.FinancialProposeAnalysis;
 import br.com.zup.bootcamp.proposta.model.AnalysisStatus;
 import br.com.zup.bootcamp.proposta.model.Propose;
 import br.com.zup.bootcamp.proposta.repository.TransactionWrapper;
 import br.com.zup.bootcamp.proposta.resources.in.NewProposeRequest;
-import br.com.zup.bootcamp.proposta.validator.DuplicateProposalValidator;
-import br.com.zup.bootcamp.proposta.validator.NewProposeRequestValidator;
+import br.com.zup.bootcamp.proposta.resources.validator.DuplicateProposalValidator;
+import br.com.zup.bootcamp.proposta.resources.validator.NewProposeRequestValidator;
 
 @RestController
 public class NewProposeController {

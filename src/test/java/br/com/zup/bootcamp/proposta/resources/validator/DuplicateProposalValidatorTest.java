@@ -1,4 +1,4 @@
-package br.com.zup.bootcamp.proposta.validator;
+package br.com.zup.bootcamp.proposta.resources.validator;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -11,6 +11,7 @@ import org.mockito.Mockito;
 import br.com.zup.bootcamp.proposta.model.Propose;
 import br.com.zup.bootcamp.proposta.repository.ProposeRepository;
 import br.com.zup.bootcamp.proposta.resources.in.NewProposeRequest;
+import br.com.zup.bootcamp.proposta.resources.validator.DuplicateProposalValidator;
 
 class DuplicateProposalValidatorTest {
 

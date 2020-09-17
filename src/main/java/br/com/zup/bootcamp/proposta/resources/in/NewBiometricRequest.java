@@ -4,7 +4,7 @@ import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-import br.com.zup.bootcamp.proposta.constraint.Base64Constraint;
+import br.com.zup.bootcamp.proposta.resources.constraint.Base64Constraint;
 import br.com.zup.bootcamp.proposta.model.Biometric;
 import br.com.zup.bootcamp.proposta.model.Propose;
 

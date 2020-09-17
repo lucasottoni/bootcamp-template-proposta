@@ -1,10 +1,9 @@
-package br.com.zup.bootcamp.proposta.advice;
+package br.com.zup.bootcamp.proposta.resources.advice;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;

@@ -1,4 +1,4 @@
-package br.com.zup.bootcamp.proposta.analysis;
+package br.com.zup.bootcamp.proposta.service.analysis;
 
 import java.math.BigDecimal;
 
@@ -9,7 +9,6 @@ import org.mockito.Mockito;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.zup.bootcamp.proposta.analisys.FinancialProposeAnalysis;
 import br.com.zup.bootcamp.proposta.integration.financial.AnalysisRequest;
 import br.com.zup.bootcamp.proposta.integration.financial.AnalysisResponse;
 import br.com.zup.bootcamp.proposta.integration.financial.FinancialClientApi;
