@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -34,5 +36,11 @@ public class ExceptionHandlerAdvice {
     public ResponseEntity<ErrorMessage> handle(ResponseStatusException responseStatusException) {
         ErrorMessage errorMessage = new ErrorMessage(Collections.singletonList(responseStatusException.getMessage()));
         return ResponseEntity.status(responseStatusException.getStatus()).body(errorMessage);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorMessage> handle(HttpMessageNotReadableException httpMessageNotReadableException) {
+        ErrorMessage errorMessage = new ErrorMessage(Collections.singletonList("invalid payload"));
+        return ResponseEntity.badRequest().body(errorMessage);
     }
 }
