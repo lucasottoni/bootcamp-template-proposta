@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import br.com.zup.bootcamp.proposta.model.AnalysisStatus;
+import br.com.zup.bootcamp.proposta.model.enumeration.AnalysisStatus;
 import br.com.zup.bootcamp.proposta.model.Card;
 import br.com.zup.bootcamp.proposta.model.Propose;
 import br.com.zup.bootcamp.proposta.repository.ProposeRepository;

@@ -10,7 +10,7 @@ import org.mockito.Mockito;
 import br.com.zup.bootcamp.proposta.integration.card.CardClientApi;
 import br.com.zup.bootcamp.proposta.integration.card.CardResponse;
 import br.com.zup.bootcamp.proposta.integration.card.GetByProposeRequest;
-import br.com.zup.bootcamp.proposta.model.AnalysisStatus;
+import br.com.zup.bootcamp.proposta.model.enumeration.AnalysisStatus;
 import br.com.zup.bootcamp.proposta.model.Card;
 import br.com.zup.bootcamp.proposta.model.Propose;
 import br.com.zup.bootcamp.proposta.repository.ProposeRepository;
@@ -63,7 +63,7 @@ class CardGeneratorSchedulerTest {
 
         cardGeneratorScheduler.generatePendingCards();
 
-        Mockito.verify(cardClientApi, Mockito.atMostOnce()).getCardByPropose(Mockito.any(GetByProposeRequest.class));
+        Mockito.verify(cardClientApi, Mockito.times(1)).getCardByPropose(Mockito.any(GetByProposeRequest.class));
         Mockito.verify(transactionWrapper, Mockito.never()).create(Mockito.any());
         Mockito.verify(transactionWrapper, Mockito.never()).update(Mockito.any());
     }
@@ -90,10 +90,12 @@ class CardGeneratorSchedulerTest {
 
         Mockito.when(proposeRepository.findPendingCards()).thenReturn(Collections.singletonList(propose));
         Mockito.when(cardClientApi.getCardByPropose(Mockito.any())).thenReturn(cardResponse);
+        Mockito.when(transactionWrapper.execute(Mockito.any())).thenCallRealMethod();
 
         cardGeneratorScheduler.generatePendingCards();
 
-        Mockito.verify(cardClientApi, Mockito.atMostOnce()).getCardByPropose(Mockito.any(GetByProposeRequest.class));
-        Mockito.verify(transactionWrapper, Mockito.atMostOnce()).create(Mockito.any(Card.class));
+        Mockito.verify(cardClientApi).getCardByPropose(Mockito.any(GetByProposeRequest.class));
+        Mockito.verify(transactionWrapper).create(Mockito.any(Card.class));
+        Mockito.verify(transactionWrapper).update(Mockito.any(Propose.class));
     }
 }

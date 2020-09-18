@@ -15,6 +15,8 @@ import javax.validation.constraints.Positive;
 
 import org.springframework.util.Assert;
 
+import br.com.zup.bootcamp.proposta.model.enumeration.AnalysisStatus;
+
 @Entity
 public class Propose {
     @Id

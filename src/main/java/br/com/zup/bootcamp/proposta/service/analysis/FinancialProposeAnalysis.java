@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import br.com.zup.bootcamp.proposta.integration.financial.AnalysisRequest;
 import br.com.zup.bootcamp.proposta.integration.financial.AnalysisResponse;
 import br.com.zup.bootcamp.proposta.integration.financial.FinancialClientApi;
-import br.com.zup.bootcamp.proposta.model.AnalysisStatus;
+import br.com.zup.bootcamp.proposta.model.enumeration.AnalysisStatus;
 import br.com.zup.bootcamp.proposta.model.Propose;
 import feign.FeignException;
 

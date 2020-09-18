@@ -2,6 +2,8 @@ package br.com.zup.bootcamp.proposta.resources.integrated;
 
 import java.math.BigDecimal;
 
+import javax.transaction.Transactional;
+
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,6 +25,8 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import br.com.zup.bootcamp.proposta.model.Propose;
+import br.com.zup.bootcamp.proposta.repository.ProposeRepository;
 import br.com.zup.bootcamp.proposta.resources.in.NewProposeRequest;
 
 @ExtendWith(SpringExtension.class)
@@ -33,6 +37,9 @@ class NewProposeControllerIntegratedTest {
     @Autowired
     private WebApplicationContext context;
 
+    @Autowired
+    private ProposeRepository proposeRepository;
+
     private MockMvc mvc;
 
     @BeforeEach
@@ -40,6 +47,7 @@ class NewProposeControllerIntegratedTest {
         mvc = MockMvcBuilders.webAppContextSetup(this.context).build();
     }
 
+    @Transactional
     @Test
     @DisplayName("Create new proposal")
     void newProposal() throws Exception {
@@ -64,7 +72,7 @@ class NewProposeControllerIntegratedTest {
 
     }
 
-
+    @Transactional
     @Test
     @DisplayName("Create new proposal analysis failure")
     void newProposalAnalysis() throws Exception {
@@ -135,6 +143,7 @@ class NewProposeControllerIntegratedTest {
 
     }
 
+    @Transactional
     @Test
     @DisplayName("New Proposal Duplicate Document")
     void duplicateDocument() throws Exception {
@@ -147,14 +156,14 @@ class NewProposeControllerIntegratedTest {
                 new BigDecimal("10900.99")
         );
 
-        mvc.perform(
-                MockMvcRequestBuilders
-                        .post(getUrl())
-                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .content(asJsonString(request))
-                        .accept(MediaType.APPLICATION_JSON)
-        ).andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isCreated());
+        Propose propose = new Propose(
+                request.getDocument(),
+                "a@a.com.br",
+                "nomeX",
+                "endereco",
+                BigDecimal.ONE
+        );
+        proposeRepository.save(propose);
 
         mvc.perform(
                 MockMvcRequestBuilders

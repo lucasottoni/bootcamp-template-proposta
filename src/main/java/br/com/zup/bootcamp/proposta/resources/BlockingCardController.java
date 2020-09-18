@@ -13,19 +13,15 @@ import org.springframework.web.server.ResponseStatusException;
 
 import br.com.zup.bootcamp.proposta.model.Card;
 import br.com.zup.bootcamp.proposta.model.CardBlock;
-import br.com.zup.bootcamp.proposta.repository.CardBlockRepository;
-import br.com.zup.bootcamp.proposta.repository.CardRepository;
+import br.com.zup.bootcamp.proposta.service.card.BlockingCardOrchestrator;
 
 @RestController
 public class BlockingCardController {
 
-    private final CardBlockRepository cardBlockRepository;
-    private final CardRepository cardRepository;
+    private final BlockingCardOrchestrator blockingCardOrchestrator;
 
-    public BlockingCardController(CardBlockRepository cardBlockRepository,
-            CardRepository cardRepository) {
-        this.cardBlockRepository = cardBlockRepository;
-        this.cardRepository = cardRepository;
+    public BlockingCardController(BlockingCardOrchestrator blockingCardOrchestrator) {
+        this.blockingCardOrchestrator = blockingCardOrchestrator;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -35,21 +31,21 @@ public class BlockingCardController {
 
         String clientIp = getClientIp(request);
 
-        if (clientIp == null || clientIp.length() == 0) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "clientIp invalid");
-        }
-
-        Card card = cardRepository.findById(cardId).orElseThrow(
+        Card card = blockingCardOrchestrator.retrieveCard(cardId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "card not found"));
 
         CardBlock cardBlock = buildCardBlock(card, userAgent, clientIp);
-        cardBlockRepository.save(cardBlock);
+        boolean isBlocked = blockingCardOrchestrator.blockCard(cardBlock);
+        if (!isBlocked) {
+            throw new ResponseStatusException(HttpStatus.FAILED_DEPENDENCY, "card could not be blocked");
+        }
     }
 
     private CardBlock buildCardBlock(Card card, String userAgent, String clientIp) {
         return new CardBlock(card, clientIp, userAgent);
     }
 
+    @NotBlank
     private String getClientIp(HttpServletRequest request) {
         final String[] ipHeaders = new String[]{
                 "X-Forwarded-For", "Proxy-Client-IP", "WL-Proxy-Client-IP", "HTTP_CLIENT_IP", "HTTP_X_FORWARDED_FOR"

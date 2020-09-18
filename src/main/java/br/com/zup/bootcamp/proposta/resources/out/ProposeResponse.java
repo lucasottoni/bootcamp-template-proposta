@@ -5,7 +5,7 @@ import java.util.Optional;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import br.com.zup.bootcamp.proposta.model.AnalysisStatus;
+import br.com.zup.bootcamp.proposta.model.enumeration.AnalysisStatus;
 import br.com.zup.bootcamp.proposta.model.Card;
 import br.com.zup.bootcamp.proposta.model.Propose;
 

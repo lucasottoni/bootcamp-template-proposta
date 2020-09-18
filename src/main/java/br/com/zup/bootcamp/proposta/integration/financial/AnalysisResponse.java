@@ -1,6 +1,6 @@
 package br.com.zup.bootcamp.proposta.integration.financial;
 
-import br.com.zup.bootcamp.proposta.model.AnalysisStatus;
+import br.com.zup.bootcamp.proposta.model.enumeration.AnalysisStatus;
 
 public class AnalysisResponse {
     private String documento;

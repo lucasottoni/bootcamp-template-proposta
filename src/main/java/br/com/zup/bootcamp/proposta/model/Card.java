@@ -7,6 +7,8 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import br.com.zup.bootcamp.proposta.model.enumeration.CardStatus;
+
 @Entity
 public class Card {
 
@@ -22,14 +24,19 @@ public class Card {
     @NotBlank
     private String owner;
 
+    @Column
+    @NotNull
+    private CardStatus status;
+
     protected Card() {
     }
 
     public Card(@NotBlank String id,
-            @NotBlank Propose propose, @NotBlank String owner) {
+            @NotNull Propose propose, @NotBlank String owner) {
         this.id = id;
         this.propose = propose;
         this.owner = owner;
+        this.status = CardStatus.GENERATED;
     }
 
     public String getId() {
@@ -42,5 +49,13 @@ public class Card {
 
     public String getOwner() {
         return owner;
+    }
+
+    public CardStatus getStatus() {
+        return status;
+    }
+
+    public void changeStatus(CardStatus cardStatus) {
+        this.status = cardStatus;
     }
 }
