@@ -9,10 +9,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrint;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -29,7 +32,8 @@ import br.com.zup.bootcamp.proposta.repository.ProposeRepository;
 import br.com.zup.bootcamp.proposta.resources.in.NewBiometricRequest;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(NewBiometricController.class)
+@WebMvcTest(value = NewBiometricController.class)
+@AutoConfigureMockMvc(addFilters = false)
 class NewBiometricControllerTest {
     @Autowired
     private MockMvc mvc;
