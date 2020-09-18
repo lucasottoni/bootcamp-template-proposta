@@ -25,7 +25,7 @@ public @interface Base64Constraint {
 
     Class<? extends Payload>[] payload() default {};
 
-    class Validator implements ConstraintValidator<Base64Constraint, String> {
+    static class Validator implements ConstraintValidator<Base64Constraint, String> {
 
         private final Logger logger = LoggerFactory.getLogger(Validator.class);
 

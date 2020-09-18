@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import br.com.zup.bootcamp.proposta.integration.card.CardClientApi;
 import br.com.zup.bootcamp.proposta.integration.card.CardResponse;
 import br.com.zup.bootcamp.proposta.integration.card.GetByProposeRequest;
+import br.com.zup.bootcamp.proposta.model.Card;
 import br.com.zup.bootcamp.proposta.model.Propose;
 import br.com.zup.bootcamp.proposta.repository.ProposeRepository;
 import br.com.zup.bootcamp.proposta.repository.TransactionWrapper;
@@ -42,9 +43,8 @@ public class CardGeneratorScheduler {
         GetByProposeRequest request = new GetByProposeRequest(propose.getId());
         try {
             CardResponse response = cardClientApi.getCardByPropose(request);
-            String cardId = response.getId();
-            propose.setCardId(cardId);
-            transactionWrapper.update(propose);
+            Card card = response.toModel(propose);
+            transactionWrapper.create(card);
         } catch (FeignException.FeignClientException fce) {
             if (fce.status() != HttpStatus.NOT_FOUND.value()) {
                 logger.error("Failure to get pending card info from propose", fce);

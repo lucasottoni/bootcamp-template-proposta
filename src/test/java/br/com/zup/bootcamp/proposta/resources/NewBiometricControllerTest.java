@@ -10,12 +10,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrint;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -26,8 +24,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.zup.bootcamp.proposta.model.AnalysisStatus;
+import br.com.zup.bootcamp.proposta.model.Card;
 import br.com.zup.bootcamp.proposta.model.Propose;
 import br.com.zup.bootcamp.proposta.repository.BiometricRepository;
+import br.com.zup.bootcamp.proposta.repository.CardRepository;
 import br.com.zup.bootcamp.proposta.repository.ProposeRepository;
 import br.com.zup.bootcamp.proposta.resources.in.NewBiometricRequest;
 
@@ -39,7 +39,7 @@ class NewBiometricControllerTest {
     private MockMvc mvc;
 
     @MockBean
-    private ProposeRepository proposeRepository;
+    private CardRepository cardRepository;
 
     @MockBean
     private BiometricRepository biometricRepository;
@@ -49,10 +49,13 @@ class NewBiometricControllerTest {
     void saveNew() throws Exception {
         String cardId = "CARD-123";
 
-        Propose propose = new Propose("documento", "email@email", "nome", "endereco", BigDecimal.ONE);
-        propose.changeFinancialAnalysis(AnalysisStatus.ELIGIBLE);
-        propose.setCardId("CARD-123");
-        Mockito.when(proposeRepository.getByCardId(cardId)).thenReturn(Optional.of(propose));
+        Card card = new Card(
+                cardId,
+                new Propose("documento", "email@email.com", "nome", "enderco", BigDecimal.ONE),
+                "titular X"
+        );
+
+        Mockito.when(cardRepository.findById(cardId)).thenReturn(Optional.of(card));
 
         NewBiometricRequest request = new NewBiometricRequest(new String(Base64.getEncoder().encode("TESTE".getBytes())));
 
@@ -85,7 +88,7 @@ class NewBiometricControllerTest {
     }
 
     @Test
-    @DisplayName("Fail to save not found propose")
+    @DisplayName("Fail to save not found card")
     void proposeNotFound() throws Exception {
         String cardId = "CARD-123";
         NewBiometricRequest request = new NewBiometricRequest(new String(Base64.getEncoder().encode("TESTE".getBytes())));

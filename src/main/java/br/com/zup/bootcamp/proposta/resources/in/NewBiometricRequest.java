@@ -4,9 +4,9 @@ import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-import br.com.zup.bootcamp.proposta.resources.constraint.Base64Constraint;
 import br.com.zup.bootcamp.proposta.model.Biometric;
-import br.com.zup.bootcamp.proposta.model.Propose;
+import br.com.zup.bootcamp.proposta.model.Card;
+import br.com.zup.bootcamp.proposta.resources.constraint.Base64Constraint;
 
 public class NewBiometricRequest {
 
@@ -23,7 +23,7 @@ public class NewBiometricRequest {
         return biometric;
     }
 
-    public Biometric toModel(Propose propose) {
-        return new Biometric(propose.getCardId(), this.biometric);
+    public Biometric toModel(Card card) {
+        return new Biometric(card, this.biometric);
     }
 }

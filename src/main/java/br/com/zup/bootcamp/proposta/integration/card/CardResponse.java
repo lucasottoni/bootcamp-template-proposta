@@ -5,6 +5,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
+import br.com.zup.bootcamp.proposta.model.Card;
+import br.com.zup.bootcamp.proposta.model.Propose;
+
 public class CardResponse {
     private String id;
     private String idProposta;
@@ -50,6 +53,14 @@ public class CardResponse {
 
     public void setVencimento(Due vencimento) {
         this.vencimento = vencimento;
+    }
+
+    public Card toModel(Propose propose) {
+        return new Card(
+                this.id,
+                propose,
+                this.titular
+        );
     }
 
     public static class Due {

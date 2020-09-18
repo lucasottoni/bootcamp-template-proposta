@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -38,8 +39,8 @@ public class Propose {
     @NotNull
     @Enumerated(EnumType.STRING)
     private AnalysisStatus financialAnalysisStatus;
-    @Column
-    private String cardId;
+    @OneToOne
+    private Card card;
 
     protected Propose() {
 
@@ -57,11 +58,25 @@ public class Propose {
         this.financialAnalysisStatus = AnalysisStatus.NOT_ELIGIBLE;
     }
 
+    public Propose(@NotBlank String document, @NotBlank String email,
+            @NotBlank String name, @NotBlank String address,
+            @NotNull @Positive BigDecimal salary,
+            @NotNull AnalysisStatus status, Card card) {
+        this.id = UUID.randomUUID().toString();
+        this.document = document;
+        this.email = email;
+        this.name = name;
+        this.address = address;
+        this.salary = salary;
+        this.financialAnalysisStatus = status;
+        this.card = card;
+    }
+
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    protected void setId(String id) {
         this.id = id;
     }
 
@@ -85,12 +100,16 @@ public class Propose {
         return salary;
     }
 
-    public AnalysisStatus getFinancialAnalysisStatus() {
-        return this.financialAnalysisStatus;
+    protected void setCard(Card card) {
+        this.card = card;
     }
 
-    public String getCardId() {
-        return cardId;
+    public Card getCard() {
+        return card;
+    }
+
+    public AnalysisStatus getFinancialAnalysisStatus() {
+        return this.financialAnalysisStatus;
     }
 
     public void changeFinancialAnalysis(AnalysisStatus newAnalysis) {
@@ -98,9 +117,4 @@ public class Propose {
         this.financialAnalysisStatus = newAnalysis;
     }
 
-    public void setCardId(String cardId) {
-        Assert.isTrue(this.financialAnalysisStatus == AnalysisStatus.ELIGIBLE, "cannot get card for non eligible");
-        Assert.isNull(this.cardId, "card has already been generated");
-        this.cardId = cardId;
-    }
 }

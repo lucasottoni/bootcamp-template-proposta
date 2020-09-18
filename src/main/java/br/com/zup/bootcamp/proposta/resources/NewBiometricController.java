@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import br.com.zup.bootcamp.proposta.model.Card;
 import br.com.zup.bootcamp.proposta.model.Propose;
 import br.com.zup.bootcamp.proposta.repository.BiometricRepository;
-import br.com.zup.bootcamp.proposta.repository.ProposeRepository;
+import br.com.zup.bootcamp.proposta.repository.CardRepository;
 import br.com.zup.bootcamp.proposta.resources.in.NewBiometricRequest;
 
 @RestController
@@ -22,12 +23,12 @@ public class NewBiometricController {
 
     private final Logger logger = LoggerFactory.getLogger(NewBiometricController.class);
     private final BiometricRepository biometricRepository;
-    private final ProposeRepository proposeRepository;
+    private final CardRepository cardRepository;
 
     public NewBiometricController(BiometricRepository biometricRepository,
-            ProposeRepository proposeRepository) {
+            CardRepository cardRepository) {
         this.biometricRepository = biometricRepository;
-        this.proposeRepository = proposeRepository;
+        this.cardRepository = cardRepository;
     }
 
     @PostMapping("/api/card/{cardId}/biometric")
@@ -36,10 +37,10 @@ public class NewBiometricController {
             @Valid @RequestBody NewBiometricRequest biometricRequest) {
         logger.info("Creating new biometric for card {}", cardId);
 
-        final Propose propose = proposeRepository.getByCardId(cardId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "propose not found"));
+        final Card card = cardRepository.findById(cardId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "card not found"));
 
-        biometricRepository.save(biometricRequest.toModel(propose));
+        biometricRepository.save(biometricRequest.toModel(card));
     }
 
 }

@@ -1,9 +1,12 @@
 package br.com.zup.bootcamp.proposta.resources.out;
 
+import java.util.Optional;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import br.com.zup.bootcamp.proposta.model.AnalysisStatus;
+import br.com.zup.bootcamp.proposta.model.Card;
 import br.com.zup.bootcamp.proposta.model.Propose;
 
 public class ProposeResponse {
@@ -24,7 +27,7 @@ public class ProposeResponse {
         return new ProposeResponse(
                 propose.getId(),
                 propose.getFinancialAnalysisStatus(),
-                propose.getCardId()
+                Optional.ofNullable(propose.getCard()).map(Card::getId).orElse(null)
         );
     }
 

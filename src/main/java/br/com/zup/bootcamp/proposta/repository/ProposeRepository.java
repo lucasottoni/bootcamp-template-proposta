@@ -14,8 +14,7 @@ public interface ProposeRepository extends JpaRepository<Propose, String> {
 
     Optional<Propose> findByDocument(String document);
 
-    @Query(value = "FROM Propose WHERE financialAnalysisStatus = 'ELIGIBLE' AND cardId IS NULL")
+    @Query(value = "FROM Propose WHERE financialAnalysisStatus = 'ELIGIBLE' AND card IS NULL")
     List<Propose> findPendingCards();
 
-    Optional<Propose> getByCardId(String cardId);
 }

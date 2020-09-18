@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import br.com.zup.bootcamp.proposta.model.AnalysisStatus;
+import br.com.zup.bootcamp.proposta.model.Card;
 import br.com.zup.bootcamp.proposta.model.Propose;
 import br.com.zup.bootcamp.proposta.repository.ProposeRepository;
 
@@ -81,10 +82,10 @@ class ProposeFollowUpControllerTest {
     @DisplayName("Find proposal that exists, eligible with card")
     void findProposalOkWithCard() throws Exception {
         String proposeId = "123";
+        String cardId = "CARD-123";
 
-        Propose propose = new Propose("documento", "email@email", "nome", "endereco", BigDecimal.ONE);
-        propose.changeFinancialAnalysis(AnalysisStatus.ELIGIBLE);
-        propose.setCardId("CARD-1");
+        Propose propose = new Propose("documento", "email@email", "nome", "endereco", BigDecimal.ONE,
+                AnalysisStatus.ELIGIBLE, new Card(cardId, null, "titular"));
         Mockito.when(proposeRepository.findById(proposeId)).thenReturn(Optional.of(propose));
 
         mvc.perform(
@@ -96,7 +97,7 @@ class ProposeFollowUpControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", CoreMatchers.equalTo(propose.getId())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.financialStatus", CoreMatchers.equalTo(propose.getFinancialAnalysisStatus().name())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.cardId", CoreMatchers.equalTo(propose.getCardId())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.cardId", CoreMatchers.equalTo(cardId)));
 
     }
 

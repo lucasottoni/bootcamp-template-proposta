@@ -11,6 +11,7 @@ import br.com.zup.bootcamp.proposta.integration.card.CardClientApi;
 import br.com.zup.bootcamp.proposta.integration.card.CardResponse;
 import br.com.zup.bootcamp.proposta.integration.card.GetByProposeRequest;
 import br.com.zup.bootcamp.proposta.model.AnalysisStatus;
+import br.com.zup.bootcamp.proposta.model.Card;
 import br.com.zup.bootcamp.proposta.model.Propose;
 import br.com.zup.bootcamp.proposta.repository.ProposeRepository;
 import br.com.zup.bootcamp.proposta.repository.TransactionWrapper;
@@ -28,14 +29,14 @@ class CardGeneratorSchedulerTest {
         CardGeneratorScheduler cardGeneratorScheduler = new CardGeneratorScheduler(
                 proposeRepository,
                 cardClientApi,
-                transactionWrapper
-        );
+                transactionWrapper);
 
         Mockito.when(proposeRepository.findPendingCards()).thenReturn(Collections.emptyList());
 
         cardGeneratorScheduler.generatePendingCards();
 
         Mockito.verify(cardClientApi, Mockito.never()).getCardByPropose(Mockito.any(GetByProposeRequest.class));
+        Mockito.verify(transactionWrapper, Mockito.never()).create(Mockito.any());
         Mockito.verify(transactionWrapper, Mockito.never()).update(Mockito.any());
     }
 
@@ -45,8 +46,7 @@ class CardGeneratorSchedulerTest {
         CardGeneratorScheduler cardGeneratorScheduler = new CardGeneratorScheduler(
                 proposeRepository,
                 cardClientApi,
-                transactionWrapper
-        );
+                transactionWrapper);
 
         Propose propose = new Propose(
                 "012345678",
@@ -64,6 +64,7 @@ class CardGeneratorSchedulerTest {
         cardGeneratorScheduler.generatePendingCards();
 
         Mockito.verify(cardClientApi, Mockito.atMostOnce()).getCardByPropose(Mockito.any(GetByProposeRequest.class));
+        Mockito.verify(transactionWrapper, Mockito.never()).create(Mockito.any());
         Mockito.verify(transactionWrapper, Mockito.never()).update(Mockito.any());
     }
 
@@ -73,8 +74,7 @@ class CardGeneratorSchedulerTest {
         CardGeneratorScheduler cardGeneratorScheduler = new CardGeneratorScheduler(
                 proposeRepository,
                 cardClientApi,
-                transactionWrapper
-        );
+                transactionWrapper);
 
         Propose propose = new Propose(
                 "012345678",
@@ -94,6 +94,6 @@ class CardGeneratorSchedulerTest {
         cardGeneratorScheduler.generatePendingCards();
 
         Mockito.verify(cardClientApi, Mockito.atMostOnce()).getCardByPropose(Mockito.any(GetByProposeRequest.class));
-        Mockito.verify(transactionWrapper, Mockito.atMostOnce()).update(Mockito.any());
+        Mockito.verify(transactionWrapper, Mockito.atMostOnce()).create(Mockito.any(Card.class));
     }
 }

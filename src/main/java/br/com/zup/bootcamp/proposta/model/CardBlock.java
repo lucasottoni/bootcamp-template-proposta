@@ -11,30 +11,38 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Biometric {
+public class CardBlock {
+
     @Id
     private String id;
 
-    @ManyToOne
     @NotNull
+    @ManyToOne
     private Card card;
 
     @Column
-    @NotBlank
-    private String biometry;
+    @NotNull
+    private LocalDateTime blockingTime;
 
     @Column
-    private LocalDateTime creationDateTime;
+    @NotBlank
+    private String userIp;
 
-    protected Biometric() {
+    @Column
+    @NotBlank
+    private String userAgent;
 
+    protected CardBlock() {
     }
 
-    public Biometric(@NotNull Card card, @NotBlank String biometry) {
+    public CardBlock(@NotNull Card card,
+            @NotBlank String userIp,
+            @NotBlank String userAgent) {
         this.id = UUID.randomUUID().toString();
         this.card = card;
-        this.biometry = biometry;
-        this.creationDateTime = LocalDateTime.now();
+        this.blockingTime = LocalDateTime.now();
+        this.userIp = userIp;
+        this.userAgent = userAgent;
     }
 
     protected void setId(String id) {
@@ -49,11 +57,15 @@ public class Biometric {
         return card;
     }
 
-    public String getBiometric() {
-        return biometry;
+    public LocalDateTime getBlockingTime() {
+        return blockingTime;
     }
 
-    public LocalDateTime getCreationDateTime() {
-        return creationDateTime;
+    public String getUserIp() {
+        return userIp;
+    }
+
+    public String getUserAgent() {
+        return userAgent;
     }
 }
