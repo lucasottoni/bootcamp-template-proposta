@@ -44,7 +44,12 @@ public class CardGeneratorScheduler {
         try {
             CardResponse response = cardClientApi.getCardByPropose(request);
             Card card = response.toModel(propose);
-            transactionWrapper.create(card);
+            propose.setCard(card);
+            transactionWrapper.execute(() -> {
+                transactionWrapper.create(card);
+                transactionWrapper.update(propose);
+                return card;
+            });
         } catch (FeignException.FeignClientException fce) {
             if (fce.status() != HttpStatus.NOT_FOUND.value()) {
                 logger.error("Failure to get pending card info from propose", fce);

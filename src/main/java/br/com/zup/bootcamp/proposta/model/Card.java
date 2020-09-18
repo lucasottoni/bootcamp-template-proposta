@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Card {
@@ -13,7 +14,7 @@ public class Card {
     @NotBlank
     private String id;
 
-    @NotBlank
+    @NotNull
     @OneToOne
     private Propose propose;
 

@@ -1,5 +1,7 @@
 package br.com.zup.bootcamp.proposta.repository;
 
+import java.util.function.Supplier;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -22,6 +24,11 @@ public class TransactionWrapper {
     public <T> T update(T object) {
         entityManager.merge(object);
         return object;
+    }
+
+    @Transactional
+    public <T> T execute(Supplier<T> supplier) {
+        return supplier.get();
     }
 
 }

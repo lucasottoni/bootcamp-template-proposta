@@ -100,10 +100,6 @@ public class Propose {
         return salary;
     }
 
-    protected void setCard(Card card) {
-        this.card = card;
-    }
-
     public Card getCard() {
         return card;
     }
@@ -117,4 +113,9 @@ public class Propose {
         this.financialAnalysisStatus = newAnalysis;
     }
 
+    public void setCard(Card card) {
+        Assert.isTrue(this.financialAnalysisStatus == AnalysisStatus.ELIGIBLE, "cannot get card for non eligible");
+        Assert.isNull(this.card, "card has already been generated");
+        this.card = card;
+    }
 }

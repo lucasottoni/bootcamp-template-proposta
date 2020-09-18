@@ -85,7 +85,10 @@ class ProposeFollowUpControllerTest {
         String cardId = "CARD-123";
 
         Propose propose = new Propose("documento", "email@email", "nome", "endereco", BigDecimal.ONE,
-                AnalysisStatus.ELIGIBLE, new Card(cardId, null, "titular"));
+                AnalysisStatus.ELIGIBLE, null);
+        Card card = new Card(cardId, propose, "titular");
+        propose.setCard(card);
+
         Mockito.when(proposeRepository.findById(proposeId)).thenReturn(Optional.of(propose));
 
         mvc.perform(
