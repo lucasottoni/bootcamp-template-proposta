@@ -1,7 +1,6 @@
 package br.com.zup.bootcamp.proposta.resources;
 
 import java.math.BigDecimal;
-import java.util.Base64;
 import java.util.Optional;
 
 import org.junit.jupiter.api.DisplayName;
@@ -20,19 +19,15 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import br.com.zup.bootcamp.proposta.model.Card;
 import br.com.zup.bootcamp.proposta.model.Propose;
-import br.com.zup.bootcamp.proposta.repository.BiometricRepository;
+import br.com.zup.bootcamp.proposta.repository.CardBlockRepository;
 import br.com.zup.bootcamp.proposta.repository.CardRepository;
-import br.com.zup.bootcamp.proposta.resources.in.NewBiometricRequest;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(value = NewBiometricController.class)
+@WebMvcTest(value = BlockingCardController.class)
 @AutoConfigureMockMvc(addFilters = false)
-class NewBiometricControllerTest {
+class BlockingCardControllerTest {
     @Autowired
     private MockMvc mvc;
 
@@ -40,11 +35,11 @@ class NewBiometricControllerTest {
     private CardRepository cardRepository;
 
     @MockBean
-    private BiometricRepository biometricRepository;
+    private CardBlockRepository cardBlockRepository;
 
     @Test
-    @DisplayName("Save new biometric")
-    void saveNew() throws Exception {
+    @DisplayName("Blocking card")
+    void blockCard() throws Exception {
         String cardId = "CARD-123";
 
         Card card = new Card(
@@ -55,12 +50,10 @@ class NewBiometricControllerTest {
 
         Mockito.when(cardRepository.findById(cardId)).thenReturn(Optional.of(card));
 
-        NewBiometricRequest request = new NewBiometricRequest(new String(Base64.getEncoder().encode("TESTE".getBytes())));
-
         mvc.perform(
                 MockMvcRequestBuilders
                         .post(getUrl(cardId))
-                        .content(asJsonString(request))
+                        .header(HttpHeaders.USER_AGENT, "test-agent")
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON)
         ).andDo(MockMvcResultHandlers.print())
@@ -69,15 +62,12 @@ class NewBiometricControllerTest {
     }
 
     @Test
-    @DisplayName("Fail to save invalid biometric")
+    @DisplayName("Fail to save without user agent")
     void invalidBase64() throws Exception {
         String cardId = "CARD-123";
-        NewBiometricRequest request = new NewBiometricRequest("INVALID BASE 64");
-
         mvc.perform(
                 MockMvcRequestBuilders
                         .post(getUrl(cardId))
-                        .content(asJsonString(request))
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON)
         ).andDo(MockMvcResultHandlers.print())
@@ -89,12 +79,11 @@ class NewBiometricControllerTest {
     @DisplayName("Fail to save not found card")
     void proposeNotFound() throws Exception {
         String cardId = "CARD-123";
-        NewBiometricRequest request = new NewBiometricRequest(new String(Base64.getEncoder().encode("TESTE".getBytes())));
 
         mvc.perform(
                 MockMvcRequestBuilders
                         .post(getUrl(cardId))
-                        .content(asJsonString(request))
+                        .header(HttpHeaders.USER_AGENT, "test-agent")
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON)
         ).andDo(MockMvcResultHandlers.print())
@@ -102,10 +91,7 @@ class NewBiometricControllerTest {
     }
 
     private String getUrl(String cardId) {
-        return "/api/card/" + cardId + "/biometric";
+        return "/api/card/" + cardId + "/blocking";
     }
 
-    private String asJsonString(NewBiometricRequest request) throws JsonProcessingException {
-        return new ObjectMapper().writeValueAsString(request);
-    }
 }
