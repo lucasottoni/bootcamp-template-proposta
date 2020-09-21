@@ -15,4 +15,7 @@ public interface CardClientApi {
     @GetMapping("/cartoes/{id}/bloqueios")
     BlockingCardResponse blockingCard(@PathVariable("id") String cardId, @RequestBody BlockingCardRequest request);
 
+    @GetMapping("/cartoes/{id}/avisos")
+    TravelNoticeResponse travelNotice(@PathVariable("id") String cardId, @RequestBody TravelNoticeRequest request);
+
 }
