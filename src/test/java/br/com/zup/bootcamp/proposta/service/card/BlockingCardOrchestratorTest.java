@@ -11,6 +11,7 @@ import org.mockito.Mockito;
 import br.com.zup.bootcamp.proposta.integration.card.BlockingCardRequest;
 import br.com.zup.bootcamp.proposta.integration.card.BlockingCardResponse;
 import br.com.zup.bootcamp.proposta.integration.card.CardClientApi;
+import br.com.zup.bootcamp.proposta.model.AuditInfo;
 import br.com.zup.bootcamp.proposta.model.Card;
 import br.com.zup.bootcamp.proposta.model.CardBlock;
 import br.com.zup.bootcamp.proposta.model.Propose;
@@ -68,7 +69,7 @@ class BlockingCardOrchestratorTest {
         Propose propose = new Propose("document", "email@email.com", "nome", "endereco", BigDecimal.ONE);
         Card card = new Card(cardId, propose, "titular");
 
-        CardBlock cardBlock = new CardBlock(card, "USER-IP", "USER-AGENT");
+        CardBlock cardBlock = new CardBlock(card, new AuditInfo("USER-IP", "USER-AGENT"));
 
         BlockingCardRequest cardBlockRequest = new BlockingCardRequest(SYSTEM_NAME);
         BlockingCardResponse cardBlockResponse = new BlockingCardResponse("BLOQUEADO");
@@ -93,7 +94,7 @@ class BlockingCardOrchestratorTest {
         Propose propose = new Propose("document", "email@email.com", "nome", "endereco", BigDecimal.ONE);
         Card card = new Card(cardId, propose, "titular");
 
-        CardBlock cardBlock = new CardBlock(card, "USER-IP", "USER-AGENT");
+        CardBlock cardBlock = new CardBlock(card, new AuditInfo("USER-IP", "USER-AGENT"));
 
         BlockingCardRequest cardBlockRequest = new BlockingCardRequest(SYSTEM_NAME);
         BlockingCardResponse cardBlockResponse = new BlockingCardResponse("OUTRO STATUS");
@@ -118,7 +119,7 @@ class BlockingCardOrchestratorTest {
         Propose propose = new Propose("document", "email@email.com", "nome", "endereco", BigDecimal.ONE);
         Card card = new Card(cardId, propose, "titular");
 
-        CardBlock cardBlock = new CardBlock(card, "USER-IP", "USER-AGENT");
+        CardBlock cardBlock = new CardBlock(card, new AuditInfo("USER-IP", "USER-AGENT"));
 
         BlockingCardRequest cardBlockRequest = new BlockingCardRequest(SYSTEM_NAME);
 

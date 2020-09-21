@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import br.com.zup.bootcamp.proposta.model.AuditInfo;
 import br.com.zup.bootcamp.proposta.model.Card;
 import br.com.zup.bootcamp.proposta.model.CardBlock;
 import br.com.zup.bootcamp.proposta.service.card.BlockingCardOrchestrator;
@@ -42,7 +43,7 @@ public class BlockingCardController {
     }
 
     private CardBlock buildCardBlock(Card card, String userAgent, String clientIp) {
-        return new CardBlock(card, clientIp, userAgent);
+        return new CardBlock(card, new AuditInfo(clientIp, userAgent));
     }
 
     @NotBlank

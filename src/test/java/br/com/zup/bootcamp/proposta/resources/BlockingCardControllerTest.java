@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import br.com.zup.bootcamp.proposta.model.AuditInfo;
 import br.com.zup.bootcamp.proposta.model.Card;
 import br.com.zup.bootcamp.proposta.model.CardBlock;
 import br.com.zup.bootcamp.proposta.model.Propose;
@@ -50,7 +51,7 @@ class BlockingCardControllerTest {
 
         Mockito.when(blockingCardOrchestrator.retrieveCard(cardId)).thenReturn(Optional.of(card));
 
-        CardBlock cardBlock = new CardBlock(card, userIp, userAgent);
+        CardBlock cardBlock = new CardBlock(card, new AuditInfo(userIp, userAgent));
         Mockito.when(blockingCardOrchestrator.blockCard(Mockito.any(CardBlock.class)))
                 .then((invocationOnMock) -> answerBlockCard(invocationOnMock, cardBlock, true));
 
@@ -78,7 +79,7 @@ class BlockingCardControllerTest {
                 "titular X"
         );
 
-        CardBlock cardBlock = new CardBlock(card, userIp, userAgent);
+        CardBlock cardBlock = new CardBlock(card, new AuditInfo(userIp, userAgent));
 
         Mockito.when(blockingCardOrchestrator.retrieveCard(cardId)).thenReturn(Optional.of(card));
         Mockito.when(blockingCardOrchestrator.blockCard(Mockito.any(CardBlock.class)))
@@ -139,7 +140,7 @@ class BlockingCardControllerTest {
 
     private boolean isSameCardBlockRequest(CardBlock arg0, CardBlock arg1) {
         return arg0.getCard() == arg1.getCard()
-                && arg0.getUserAgent().equalsIgnoreCase(arg1.getUserAgent())
-                && arg0.getUserIp().equalsIgnoreCase(arg1.getUserIp());
+                && arg0.getAuditInfo().getUserAgent().equalsIgnoreCase(arg1.getAuditInfo().getUserAgent())
+                && arg0.getAuditInfo().getUserIp().equalsIgnoreCase(arg1.getAuditInfo().getUserIp());
     }
 }

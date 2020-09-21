@@ -1,13 +1,12 @@
 package br.com.zup.bootcamp.proposta.model;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -20,29 +19,18 @@ public class CardBlock {
     @ManyToOne
     private Card card;
 
-    @Column
+    @OneToOne(cascade = CascadeType.PERSIST)
     @NotNull
-    private LocalDateTime blockingTime;
-
-    @Column
-    @NotBlank
-    private String userIp;
-
-    @Column
-    @NotBlank
-    private String userAgent;
+    private AuditInfo auditInfo;
 
     protected CardBlock() {
     }
 
     public CardBlock(@NotNull Card card,
-            @NotBlank String userIp,
-            @NotBlank String userAgent) {
+            @NotNull AuditInfo auditInfo) {
         this.id = UUID.randomUUID().toString();
         this.card = card;
-        this.blockingTime = LocalDateTime.now();
-        this.userIp = userIp;
-        this.userAgent = userAgent;
+        this.auditInfo = auditInfo;
     }
 
     protected void setId(String id) {
@@ -57,15 +45,7 @@ public class CardBlock {
         return card;
     }
 
-    public LocalDateTime getBlockingTime() {
-        return blockingTime;
-    }
-
-    public String getUserIp() {
-        return userIp;
-    }
-
-    public String getUserAgent() {
-        return userAgent;
+    public AuditInfo getAuditInfo() {
+        return auditInfo;
     }
 }
