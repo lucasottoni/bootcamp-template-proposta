@@ -18,4 +18,6 @@ public interface CardClientApi {
     @GetMapping("/cartoes/{id}/avisos")
     TravelNoticeResponse travelNotice(@PathVariable("id") String cardId, @RequestBody TravelNoticeRequest request);
 
+    @GetMapping("/cartoes/{id}/carteiras")
+    NewWalletResponse addWallet(@PathVariable("id") String cardId, @RequestBody NewWalletRequest request);
 }
