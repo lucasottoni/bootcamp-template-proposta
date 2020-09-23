@@ -69,7 +69,7 @@ class CardWalletOrchestratorTest {
 
     @Test
     @DisplayName("Could not associate wallet, integration failure")
-    void couldAssociate() {
+    void couldNotAssociate() {
         String cardId = "CARD-123";
         String email = "email@email.com";
         ExternalWallet wallet = ExternalWallet.PAYPAL;
@@ -117,6 +117,42 @@ class CardWalletOrchestratorTest {
         Mockito.verify(cardWalletRepository, Mockito.never()).save(cardWallet);
         Mockito.verify(cardClientApi, Mockito.never()).addWallet(Mockito.anyString(), Mockito.any(NewWalletRequest.class));
     }
+
+    @Test
+    @DisplayName("Another Wallet")
+    void addSecondWallet() {
+        String cardId = "CARD-123";
+        String email = "email@email.com";
+        ExternalWallet wallet1 = ExternalWallet.PAYPAL;
+        ExternalWallet wallet2 = ExternalWallet.SAMSUNG_PAY;
+
+        Card card = buildCard(cardId);
+
+        CardWallet cardWallet1 = new CardWallet(new CardWallet.Id(card.getId(), wallet1), email);
+        CardWallet cardWallet2 = new CardWallet(new CardWallet.Id(card.getId(), wallet2), email);
+
+        Mockito.when(cardRepository.findById(cardId)).thenReturn(Optional.of(card));
+
+        Mockito.when(cardWalletRepository.findById(new CardWallet.Id(cardId, wallet1)))
+                .thenReturn(Optional.of(cardWallet1));
+        Mockito.when(cardWalletRepository.findById(new CardWallet.Id(cardId, wallet2)))
+                .thenReturn(Optional.empty());
+
+        NewWalletRequest walletRequest = new NewWalletRequest(email, wallet2.name());
+        NewWalletResponse walletResponse = new NewWalletResponse("ASSOCIADO", "EXTERNAL-ID");
+
+        Mockito.when(cardClientApi.addWallet(cardId, walletRequest)).thenReturn(walletResponse);
+
+        final Optional<CardWallet> associatedWallet = orchestrator.associateWallet(cardWallet2);
+
+        Assertions.assertNotNull(associatedWallet);
+        Assertions.assertTrue(associatedWallet.isPresent());
+        Assertions.assertEquals("EXTERNAL-ID", associatedWallet.get().getExternalId());
+
+        Mockito.verify(cardWalletRepository).save(cardWallet2);
+        Mockito.verify(cardClientApi).addWallet(cardId, walletRequest);
+    }
+
     @Test
     @DisplayName("Card Not Found")
     void cardNotFound() {
