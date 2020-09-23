@@ -10,6 +10,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.test.autoconfigure.OverrideAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
@@ -28,9 +30,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import br.com.zup.bootcamp.proposta.model.Propose;
 import br.com.zup.bootcamp.proposta.repository.ProposeRepository;
 import br.com.zup.bootcamp.proposta.resources.in.NewProposeRequest;
+import io.opentracing.contrib.spring.tracer.configuration.TracerAutoConfiguration;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
+@EnableAutoConfiguration(exclude = TracerAutoConfiguration.class)
 @AutoConfigureMockMvc(addFilters = false)
 class NewProposeControllerIntegratedTest {
 
